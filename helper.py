@@ -1,12 +1,8 @@
 # Store embeddings in the database
 
-import google.generativeai as genai
 import numpy as np
-import pandas as pd
 
-from db import fetch_all_embeddings
-
-genai.configure(api_key="AIzaSyDqNSlN0jbyMB7xQlor8w_5CqxAh9xRVBA")
+from data_upload import load_csv_data
 
 # def store_embedding(email_text, embedding):
 #     with conn.cursor() as cur:
@@ -32,17 +28,16 @@ def calculate_distance(embedding1, embedding2):
     return np.linalg.norm(np.array(embedding1) - np.array(embedding2))
 
 
-# Find the closest embeddings to the query
-def find_closest_embeddings(query_embedding, top_n=5):
-    results = fetch_all_embeddings()
-    distances = []
+data = load_csv_data("./phishing-with-embeddings.csv")
 
-    for row in results:
-        email_id, email_text, stored_embedding = row
-        stored_embedding = np.array(eval(stored_embedding))  # Convert JSON string back to NumPy array
-        distance = calculate_distance(query_embedding, stored_embedding)
-        distances.append((email_text, distance))
 
-    # Sort by distance and get top N closest matches
-    distances.sort(key=lambda x: x[1])
-    return distances[:top_n]
+def find_closest_embeddings(question_embedding, top_n=5):
+    stored_embeddings = data['embedding']
+    data['distance'] = stored_embeddings.apply(lambda x: calculate_distance(question_embedding, x))
+
+    # Filter out rows with NaN in 'Email Text'
+    filtered_data = data.dropna(subset=['Email Text'])
+
+    data_sorted = filtered_data.sort_values('distance', ascending=False)
+
+    return data_sorted.head(top_n)[['Email Text', 'distance']]

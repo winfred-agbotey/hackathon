@@ -4,8 +4,9 @@ import numpy as np
 
 # Create a connection to the database
 conn = s2.connect(
-    'winfred mawuli-48937:zCmwpzeqIHCxzr2NNYP6fOrxh2UCOQex@svc-3482219c-a389-4079-b18b-d50662524e8a-shared-dml.aws-virginia-6.svc.singlestore.com:3333/db_winfredmawuli_5e72d'
+    'DATABASE_URL'
 )
+
 
 # Check if the connection is open
 def check_connection():
@@ -13,6 +14,7 @@ def check_connection():
         with conn.cursor() as cur:
             flag = cur.is_connected()
             print("Database Connected:", flag)
+
 
 # Function to retrieve embeddings from the database
 def get_embeddings_from_db():
@@ -25,6 +27,7 @@ def get_embeddings_from_db():
 
         print("data from db: ", data)
     return data
+
 
 # # Function to save the embeddings into the database
 # def save_embedding_to_db(email_text, embedding):
