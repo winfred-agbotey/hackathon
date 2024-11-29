@@ -1,35 +1,26 @@
 # Function to generate a response using Google GenAI
-import numpy as np
-from flask import jsonify
-import requests
-import pandas as pd
 
-from data_upload import load_csv_data
-from db import get_embeddings_from_db
-from get_embedding import get_embedding
-from helper import find_closest_embeddings
 import google.generativeai as genai
+
+from get_embedding import get_embedding
+from helper import find_closest_embeddings_from_db
 
 genai.configure(api_key="GEMINI")
 
 
-def get_analysis(question):
-    # question = (
-    #     "Dear Valued Customer, We are reaching out to inform you of a recent security update regarding your account..."
-    # )
-
+def get_analysis(email_text):
     # Generate embedding for the question
-    question_embedding = get_embedding(question)
+    email_text_embedding = get_embedding(email_text)
 
     # Retrieve the closest stored emails from the database
-    closest_emails = find_closest_embeddings(question_embedding)
+    closest_emails = find_closest_embeddings_from_db(email_text_embedding)
 
     # Combine the closest email texts as context
     context = "\n".join([email[0] for email in closest_emails])
     retrieved_context = f"Use this information about Phishing as context to answer the user's question accurately: {context}. stick to this context when answering the question."
 
     # Prepare the prompt for the generative model
-    prompt = f"Context: {retrieved_context}\nQuestion: {question}"
+    prompt = f"Context: {retrieved_context}\nQuestion: {email_text}"
 
     model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content(prompt)

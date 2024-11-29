@@ -2,11 +2,9 @@ from flask import Flask, request, jsonify
 
 import db
 from db import check_connection
-from generator import  get_analysis
+from generator import get_analysis
 
 app = Flask(__name__)
-
-db.check_connection()
 
 
 @app.route('/')
@@ -26,4 +24,5 @@ def analyze():
 
 
 if __name__ == '__main__':
+    db.check_connection()
     app.run("0.0.0.0", port=80, debug=True)

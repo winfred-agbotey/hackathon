@@ -39,17 +39,3 @@ def get_embedding(text, model="models/text-embedding-004"):
 
     return embedding_results
 
-
-# # Function to retrieve embeddings from the database
-# def get_embeddings_from_db():
-#     query = "SELECT email_text, embedding FROM phishing_emails"
-#     with conn.cursor() as cur:
-#         cur.execute(query)
-#         result = cur.fetchall()
-#         # Convert embedding from bytes to numpy array
-#         data = [(email_text, np.frombuffer(embedding, dtype=np.float32)) for email_text, embedding in result]
-#     return data
-#
-# # Retrieve embeddings and email texts
-# emails_with_embeddings = get_embeddings_from_db()
-# emails_with_embeddings[:5]  # Print the first 5 records

@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="SingleStore" uuid="bf94acd9-d8fe-498a-82a8-2d01d9c7b3c6">
-      <driver-ref>memsql_singlestore</driver-ref>
-      <synchronize>true</synchronize>
-      <configured-by-url>true</configured-by-url>
-      <jdbc-driver>com.singlestore.jdbc.Driver</jdbc-driver>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="db_winfredmawuli_5e72d@svc-3482219c-a389-4079-b18b-d50662524e8a-shared-dml.aws-virginia-6.svc.singlestore.com" uuid="b24a9445-d727-4c0d-b756-96ef84d349fa">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
