@@ -19,17 +19,12 @@ def save_embeddings_from_pickle(file_path):
     # Load data from the pickle file
     data = load_csv_data(file_path)
 
-    print(data)
-
     # Iterate over the email texts and embeddings and save to the database
     # print(data)
     for _, row in data.iterrows():
         email_text = row['Email Text']  # Assuming 'Email Text' is the column name in the CSV
         embedding = np.array(eval(row['embedding']))  # Assuming embeddings are stored as stringified lists
 
-        print(email_text)
-        print("***********************************************")
-        print(embedding)
         # Save each email text and its corresponding embedding to the database
         db.store_embedding(email_text, np.array(embedding))
 
