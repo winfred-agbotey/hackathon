@@ -3,8 +3,11 @@ from flask import Flask, request, jsonify
 import db
 from db import check_connection
 from generator import get_analysis
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
 
 
 @app.route('/')

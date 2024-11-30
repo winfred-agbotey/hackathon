@@ -1,9 +1,14 @@
 import singlestoredb as s2
 import numpy as np
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Create a connection to the database
 conn = s2.connect(
-    'DATABASE_URL'
+    os.getenv("DATABASE_URL")
 )
 
 
